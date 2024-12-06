@@ -23,17 +23,23 @@ exports.selectUserSettings = async (username, token) => {
   }
 };
 
-exports.createUserSettings = async (username, strategy, bot_on, token) => {
+exports.createUserSettings = async (
+  username,
+  strategy,
+  bot_on,
+  risk,
+  token
+) => {
   try {
     verifyUsernameByToken(username, token);
 
-    const queryValues = [username, strategy, bot_on];
+    const queryValues = [username, strategy, bot_on, risk];
 
     const response = await db.query(
       `
         INSERT INTO user_settings 
-        (username, strategy, bot_on)
-        VALUES ($1, $2, $3)
+        (username, strategy, bot_on, risk)
+        VALUES ($1, $2, $3, $4)
         RETURNING *
         `,
       queryValues
@@ -44,32 +50,23 @@ exports.createUserSettings = async (username, strategy, bot_on, token) => {
   }
 };
 
-exports.updateUserSettings = async (username, strategy, bot_on, token) => {
+exports.updateUserSettings = async (
+  username,
+  strategy,
+  bot_on,
+  risk,
+  token
+) => {
   try {
     verifyUsernameByToken(username, token);
-    const queryValues = [username];
+    const queryValues = [username, strategy, bot_on, risk];
 
-    let sqlQuery = "UPDATE user_settings SET";
-
-    if (strategy && bot_on !== undefined) {
-      queryValues.push(strategy);
-      sqlQuery += ` strategy = $2,`;
-    } else if (strategy) {
-      queryValues.push(strategy);
-      sqlQuery += ` strategy = $2`;
-    }
-
-    if (bot_on !== undefined && strategy) {
-      queryValues.push(bot_on);
-      sqlQuery += ` bot_on = $3`;
-    } else if (bot_on !== undefined) {
-      queryValues.push(bot_on);
-      sqlQuery += ` bot_on = $2`;
-    }
-
-    sqlQuery += ` WHERE username = $1`;
-
-    sqlQuery += ` RETURNING *`;
+    let sqlQuery = `
+      UPDATE user_settings 
+      SET strategy = $2, bot_on = $3, risk = $4 
+      WHERE username = $1
+      RETURNING *
+      `;
 
     const response = await db.query(sqlQuery, queryValues);
 
@@ -82,7 +79,7 @@ exports.updateUserSettings = async (username, strategy, bot_on, token) => {
 exports.removeUserSettings = async (username, token) => {
   try {
     verifyUsernameByToken(username, token);
-    
+
     const response = await db.query(
       `DELETE FROM user_settings WHERE username = $1`,
       [username]
@@ -91,6 +88,20 @@ exports.removeUserSettings = async (username, token) => {
     if (response.rowCount === 0) {
       throw { status: 404, message: "User does not exist." };
     }
+  } catch (error) {
+    throw error;
+  }
+};
+
+exports.getRiskByUsername = async (username) => {
+  try {
+    const response = await db.query(
+      `
+      SELECT risk FROM user_settings WHERE username = $1
+      `,
+      [username]
+    );
+    return response.rows[0].risk
   } catch (error) {
     throw error;
   }

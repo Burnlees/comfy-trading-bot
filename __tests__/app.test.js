@@ -1508,6 +1508,7 @@ describe("GET /user-settings/:username", () => {
           username: "john_doe",
           strategy: expect.any(String),
           bot_on: expect.any(Boolean),
+          risk: expect.any(Number),
         });
       });
   });
@@ -1569,6 +1570,7 @@ describe("POST /user-settings/:username", () => {
     const input = {
       strategy: "MACD",
       bot_on: true,
+      risk: 3,
     };
 
     return request(app)
@@ -1581,6 +1583,7 @@ describe("POST /user-settings/:username", () => {
           username: "test_user",
           strategy: "MACD",
           bot_on: true,
+          risk: 3,
         });
       });
   });
@@ -1605,6 +1608,7 @@ describe("POST /user-settings/:username", () => {
     const input = {
       strategy: "MACD",
       bot_on: true,
+      risk: 3,
     };
 
     const mockErrorMessage = "Unauthorized access.";
@@ -1683,7 +1687,9 @@ describe("PATCH /user-settings/:username", () => {
     );
 
     const input = {
+      strategy: "MACD",
       bot_on: false,
+      risk: 3,
     };
 
     return request(app)
@@ -1696,6 +1702,7 @@ describe("PATCH /user-settings/:username", () => {
           username: "john_doe",
           strategy: "MACD",
           bot_on: false,
+          risk: 3,
         });
       });
   });
@@ -1708,7 +1715,9 @@ describe("PATCH /user-settings/:username", () => {
     );
 
     const input = {
+      strategy: "MACD",
       bot_on: false,
+      risk: 3,
     };
 
     return request(app)
@@ -1729,7 +1738,9 @@ describe("PATCH /user-settings/:username", () => {
     );
 
     const input = {
+      strategy: "MACD",
       bot_on: 123,
+      risk: 3,
     };
 
     return request(app)
