@@ -16,6 +16,7 @@ exports.seed = async (testApiData, userSettingsData) => {
         username VARCHAR PRIMARY KEY,
         strategy VARCHAR NOT NULL,
         bot_on BOOLEAN NOT NULL,
+        risk INT DEFAULT 1,
         FOREIGN KEY (username) REFERENCES api_keys(username) ON DELETE CASCADE)`);
 
   const insertApiDataQueryStr = format(

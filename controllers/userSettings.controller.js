@@ -21,13 +21,14 @@ exports.getUserSettingsByUsername = async (req, res, next) => {
 
 exports.postUserSettingsByUsername = async (req, res, next) => {
   const { username } = req.params;
-  const { strategy, bot_on } = req.body;
+  const { strategy, bot_on, risk } = req.body;
   const token = req.headers.authorization?.split(" ")[1];
   try {
     const userSettings = await createUserSettings(
       username,
       strategy,
       bot_on,
+      risk,
       token
     );
     res.status(201).send({ userSettings });
@@ -41,13 +42,14 @@ exports.postUserSettingsByUsername = async (req, res, next) => {
 
 exports.patchUserSettingsByUsername = async (req, res, next) => {
   const { username } = req.params;
-  const { strategy, bot_on } = req.body;
+  const { strategy, bot_on, risk } = req.body;
   const token = req.headers.authorization?.split(" ")[1];
   try {
     const userSettings = await updateUserSettings(
       username,
       strategy,
       bot_on,
+      risk,
       token
     );
     res.status(200).send({ userSettings });

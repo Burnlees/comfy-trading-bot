@@ -8,6 +8,7 @@ const {
   removeOrderById,
   updateOrderById,
 } = require("../models/order.model");
+const { getRiskByUsername } = require("../models/userSettings.model");
 
 exports.placeOrderForUser = async (
   user,
@@ -19,10 +20,12 @@ exports.placeOrderForUser = async (
   validate
 ) => {
   try {
+    const risk = (await getRiskByUsername(user.username)) / 100;
+
     const orderVolume = await riskManageVolume(
       price,
       stopLoss,
-      0.03,
+      risk,
       "USDT",
       user.api_key,
       user.private_key
@@ -82,7 +85,7 @@ exports.monitorPriceForPositionClose = async (
     if (response.data) {
       currentPrice = response.data[0].last;
     }
-    
+
     if (currentPrice > restingOrders[1] || currentPrice < restingOrders[0]) {
       for (let i = 0; i < apiKeys.length; i++) {
         await removeAllOrders(apiKeys[i].api_key, apiKeys[i].private_key);
