@@ -63,7 +63,7 @@ jest.mock("../utils/helperFunctions");
 jest.mock("../utils/riskManagement");
 jest.mock("../models/auth.model");
 
-describe("POST /create-order", () => {
+describe("POST /api/kraken/create-order", () => {
   afterEach(() => {
     jest.restoreAllMocks();
   });
@@ -86,7 +86,7 @@ describe("POST /create-order", () => {
     createOrder.mockResolvedValue(mockOrderData);
 
     return request(app)
-      .post("/create-order")
+      .post("/api/kraken/create-order")
       .expect(201)
       .send(mockOrderDetails)
       .then(({ body }) => {
@@ -128,7 +128,7 @@ describe("POST /create-order", () => {
     createTakeProfitOrder.mockResolvedValue(mockTakeProftOrderData);
 
     return request(app)
-      .post("/create-order")
+      .post("/api/kraken/create-order")
       .expect(201)
       .send(mockOrderDetails)
       .then(({ body }) => {
@@ -150,32 +150,9 @@ describe("POST /create-order", () => {
         );
       });
   });
-  // it("should call the trackPositionStatus function, with the txid of the placed order", async () => {
-  //   const mockOrderDetails = {
-  //     ticker: "BTCUSDT",
-  //     action: "buy",
-  //     price: 64513.9,
-  //     quantity: 0.1956,
-  //     takeProfit: 64616.1,
-  //     stopLoss: 64462.8,
-  //   };
-
-  //   const mockOrderData = { txid: ["order123"] };
-
-  //   createOrder.mockResolvedValue(mockOrderData);
-
-  //   return request(app)
-  //     .post("/create-order")
-  //     .expect(201)
-  //     .send(mockOrderDetails)
-  //     .then(({ body }) => {
-  //       expect(trackPositionStatus).toHaveBeenCalled();
-  //       expect(trackPositionStatus).toHaveBeenCalledWith(mockOrderData.txid[0]);
-  //     });
-  // });
 });
 
-describe("GET /get-balance", () => {
+describe("GET /api/kraken/balance", () => {
   afterEach(() => {
     jest.restoreAllMocks();
   });
@@ -192,7 +169,7 @@ describe("GET /get-balance", () => {
     retrieveBalance.mockResolvedValue(mockBalanceData);
 
     return request(app)
-      .get("/get-balance")
+      .get("/api/kraken/balance")
       .set("Authorization", `Bearer ${accessToken}`)
       .expect(200)
       .then(({ body }) => {
@@ -215,7 +192,7 @@ describe("GET /get-balance", () => {
     });
 
     return request(app)
-      .get("/get-balance")
+      .get("/api/kraken/balance")
       .set("Authorization", `Bearer ${accessToken}`)
       .expect(500)
       .then(({ body }) => {
@@ -275,7 +252,7 @@ describe("GET /api/kraken/ledger-info", () => {
   });
 });
 
-describe("GET /trades-history", () => {
+describe("GET /api/kraken/trades-history", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -292,7 +269,7 @@ describe("GET /trades-history", () => {
     retrieveTradesHistory.mockResolvedValue(mockTradesHistory);
 
     return request(app)
-      .get("/get-trades-history")
+      .get("/api/kraken/trades-history")
       .set("Authorization", `Bearer ${accessToken}`)
       .expect(200)
       .then(({ body }) => {
@@ -315,7 +292,7 @@ describe("GET /trades-history", () => {
     });
 
     return request(app)
-      .get("/get-trades-history")
+      .get("/api/kraken/trades-history")
       .set("Authorization", `Bearer ${accessToken}`)
       .expect(500)
       .then(({ body }) => {
@@ -325,7 +302,7 @@ describe("GET /trades-history", () => {
   });
 });
 
-describe("PATCH /cancel-order", () => {
+describe("PATCH /api/kraken/cancel-order", () => {
   afterEach(() => {
     jest.restoreAllMocks();
   });
@@ -342,7 +319,7 @@ describe("PATCH /cancel-order", () => {
     removeOrderById.mockResolvedValue(mockRemovalData);
 
     return request(app)
-      .patch("/cancel-order")
+      .patch("/api/kraken/cancel-order")
       .set("Authorization", `Bearer ${accessToken}`)
       .expect(200)
       .then(({ body }) => {
@@ -363,7 +340,7 @@ describe("PATCH /cancel-order", () => {
     };
 
     return request(app)
-      .patch("/cancel-order")
+      .patch("/api/kraken/cancel-order")
       .expect(200)
       .set("Authorization", `Bearer ${accessToken}`)
       .send(input)
@@ -394,7 +371,7 @@ describe("PATCH /cancel-order", () => {
     });
 
     return request(app)
-      .patch("/cancel-order")
+      .patch("/api/kraken/cancel-order")
       .set("Authorization", `Bearer ${accessToken}`)
       .expect(500)
       .send(input)
@@ -405,7 +382,7 @@ describe("PATCH /cancel-order", () => {
   });
 });
 
-describe("PATCH /cancel-all-orders", () => {
+describe("PATCH /api/kraken/cancel-all-orders", () => {
   afterEach(() => {
     jest.restoreAllMocks();
   });
@@ -422,7 +399,7 @@ describe("PATCH /cancel-all-orders", () => {
     removeAllOrders.mockResolvedValue(mockRemovalData);
 
     return request(app)
-      .patch("/cancel-all-orders")
+      .patch("/api/kraken/cancel-all-orders")
       .set("Authorization", `Bearer ${accessToken}`)
       .expect(200)
       .then(({ body }) => {
@@ -445,7 +422,7 @@ describe("PATCH /cancel-all-orders", () => {
     });
 
     return request(app)
-      .patch("/cancel-all-orders")
+      .patch("/api/kraken/cancel-all-orders")
       .set("Authorization", `Bearer ${accessToken}`)
       .expect(500)
       .then(({ body }) => {
@@ -455,7 +432,7 @@ describe("PATCH /cancel-all-orders", () => {
   });
 });
 
-describe("GET /get-open-orders", () => {
+describe("GET /api/kraken/open-orders", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -472,7 +449,7 @@ describe("GET /get-open-orders", () => {
     retrieveOpenOrders.mockResolvedValue(mockOpenOrdersData);
 
     return request(app)
-      .get("/get-open-orders")
+      .get("/api/kraken/open-orders")
       .set("Authorization", `Bearer ${accessToken}`)
       .expect(200)
       .then(({ body }) => {
@@ -495,7 +472,7 @@ describe("GET /get-open-orders", () => {
     });
 
     return request(app)
-      .get("/get-open-orders")
+      .get("/api/kraken/open-orders")
       .expect(500)
       .set("Authorization", `Bearer ${accessToken}`)
       .then(({ body }) => {
@@ -505,7 +482,7 @@ describe("GET /get-open-orders", () => {
   });
 });
 
-describe("PATCH /edit-order", () => {
+describe("PATCH /api/kraken/edit-order", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -524,7 +501,7 @@ describe("PATCH /edit-order", () => {
     updateOrderById.mockResolvedValue(mockUpdatedOrderData);
 
     return request(app)
-      .patch("/edit-order")
+      .patch("/api/kraken/edit-order")
       .set("Authorization", `Bearer ${accessToken}`)
       .expect(200)
       .send(input)
@@ -555,7 +532,7 @@ describe("PATCH /edit-order", () => {
     });
 
     return request(app)
-      .patch("/edit-order")
+      .patch("/api/kraken/edit-order")
       .set("Authorization", `Bearer ${accessToken}`)
       .expect(500)
       .send(input)
@@ -566,7 +543,7 @@ describe("PATCH /edit-order", () => {
   });
 });
 
-describe("GET /get-pnl", () => {
+describe("GET /api/kraken/pnl", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -582,7 +559,7 @@ describe("GET /get-pnl", () => {
     retrievePnl.mockResolvedValue(mockUnrealisedPnl);
 
     return request(app)
-      .get("/get-pnl")
+      .get("/api/kraken/pnl")
       .set("Authorization", `Bearer ${accessToken}`)
       .expect(200)
       .then(({ body }) => {
@@ -605,7 +582,7 @@ describe("GET /get-pnl", () => {
     });
 
     return request(app)
-      .get("/get-pnl")
+      .get("/api/kraken/pnl")
       .set("Authorization", `Bearer ${accessToken}`)
       .expect(500)
       .then(({ body }) => {
@@ -615,20 +592,20 @@ describe("GET /get-pnl", () => {
   });
 });
 
-describe("POST /register", () => {
+describe("POST /api/auth/register", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
   it("should when successful respond with a 201 status code", async () => {
     const input = { email: "test1@outlook.com", password: "TesT123!" };
 
-    return request(app).post("/register").send(input).expect(201);
+    return request(app).post("/api/auth/register").send(input).expect(201);
   });
   it("should call createUser with the correct arguments", () => {
     const input = { email: "test1@outlook.com", password: "TesT123!" };
 
     return request(app)
-      .post("/register")
+      .post("/api/auth/register")
       .send(input)
       .expect(201)
       .then(() => {
@@ -650,7 +627,7 @@ describe("POST /register", () => {
     });
 
     return request(app)
-      .post("/register")
+      .post("/api/auth/register")
       .send(input)
       .expect(201)
       .then(({ body }) => {
@@ -668,7 +645,7 @@ describe("POST /register", () => {
     const input = { email: "test1@outlook.com", password: "Test" };
 
     return request(app)
-      .post("/register")
+      .post("/api/auth/register")
       .send(input)
       .expect(400)
       .then(({ body }) => {
@@ -688,7 +665,7 @@ describe("POST /register", () => {
     const input = { email: "test1outlook.com", password: "TesT123!" };
 
     return request(app)
-      .post("/register")
+      .post("/api/auth/register")
       .send(input)
       .expect(400)
       .then(({ body }) => {
@@ -697,20 +674,23 @@ describe("POST /register", () => {
   });
 });
 
-describe("POST /confirm-sign-up", () => {
+describe("POST /api/auth/confirm-sign-up", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
   it("should when successful return with a 200 status code", () => {
     const input = { email: "test@test.com", code: "123456" };
 
-    return request(app).post("/confirm-sign-up").send(input).expect(200);
+    return request(app)
+      .post("/api/auth/confirm-sign-up")
+      .send(input)
+      .expect(200);
   });
   it("should call validateUser with the correct arguments", async () => {
     const input = { email: "test@test.com", code: "123456" };
 
     return request(app)
-      .post("/confirm-sign-up")
+      .post("/api/auth/confirm-sign-up")
       .send(input)
       .expect(200)
       .then(() => {
@@ -727,7 +707,7 @@ describe("POST /confirm-sign-up", () => {
     });
 
     return request(app)
-      .post("/confirm-sign-up")
+      .post("/api/auth/confirm-sign-up")
       .send(input)
       .expect(400)
       .then(({ body }) => {
@@ -736,18 +716,18 @@ describe("POST /confirm-sign-up", () => {
   });
 });
 
-describe("POST /sign-in", () => {
+describe("POST /api/auth/sign-in", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
   it("should when successful respond with a 200 status code", () => {
-    return request(app).post("/sign-in").expect(200);
+    return request(app).post("/api/auth/sign-in").expect(200);
   });
   it("should call authenticateUser with the correct arguments", () => {
     const input = { email: "test@test.com", password: "password" };
 
     return request(app)
-      .post("/sign-in")
+      .post("/api/auth/sign-in")
       .send(input)
       .then(() => {
         expect(authenticateUser).toHaveBeenCalled();
@@ -766,7 +746,7 @@ describe("POST /sign-in", () => {
     });
 
     return request(app)
-      .post("/sign-in")
+      .post("/api/auth/sign-in")
       .send(input)
       .then(({ body }) => {
         expect(body.authenticationResult).toBe(mockResponse);
@@ -782,7 +762,7 @@ describe("POST /sign-in", () => {
     });
 
     return request(app)
-      .post("/sign-in")
+      .post("/api/auth/sign-in")
       .send(input)
       .expect(400)
       .then(({ body }) => {
@@ -791,18 +771,18 @@ describe("POST /sign-in", () => {
   });
 });
 
-describe("DELETE /delete-user", () => {
+describe("DELETE /api/auth/delete-user", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
   it("should when successful respond with a 202 status code", async () => {
-    return request(app).delete("/delete-user").expect(202);
+    return request(app).delete("/api/auth/delete-user").expect(202);
   });
   it("should call removeUser with the correct arguments", async () => {
     const accessToken = "token";
 
     return request(app)
-      .delete("/delete-user")
+      .delete("/api/auth/delete-user")
       .set("Authorization", `Bearer ${accessToken}`)
       .expect(202)
       .then(() => {
@@ -820,7 +800,7 @@ describe("DELETE /delete-user", () => {
     });
 
     return request(app)
-      .delete("/delete-user")
+      .delete("/api/auth/delete-user")
       .set("Authorization", `Bearer ${accessToken}`)
       .expect(400)
       .then(({ body }) => {
@@ -829,12 +809,12 @@ describe("DELETE /delete-user", () => {
   });
 });
 
-describe("PATCH /change-password", () => {
+describe("PATCH /api/auth/change-password", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
   it("should when successful respond with a 200 status code", async () => {
-    return request(app).patch("/change-password").expect(200);
+    return request(app).patch("/api/auth/change-password").expect(200);
   });
   it("should call changeUserPassword with the correct arguments", async () => {
     const input = {
@@ -844,7 +824,7 @@ describe("PATCH /change-password", () => {
     const accessToken = "token";
 
     return request(app)
-      .patch("/change-password")
+      .patch("/api/auth/change-password")
       .set("Authorization", `Bearer ${accessToken}`)
       .send(input)
       .expect(200)
@@ -870,7 +850,7 @@ describe("PATCH /change-password", () => {
     });
 
     return request(app)
-      .patch("/change-password")
+      .patch("/api/auth/change-password")
       .set("Authorization", `Bearer ${accessToken}`)
       .send(input)
       .expect(200)
@@ -891,7 +871,7 @@ describe("PATCH /change-password", () => {
     });
 
     return request(app)
-      .patch("/change-password")
+      .patch("/api/auth/change-password")
       .set("Authorization", `Bearer ${accessToken}`)
       .send(input)
       .expect(400)
@@ -901,7 +881,7 @@ describe("PATCH /change-password", () => {
   });
 });
 
-describe("POST /resend-confirmation-code", () => {
+describe("POST /api/auth/resend-confirmation-code", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -911,7 +891,7 @@ describe("POST /resend-confirmation-code", () => {
     };
 
     return request(app)
-      .post("/resend-confirmation-code")
+      .post("/api/auth/resend-confirmation-code")
       .send(input)
       .expect(200);
   });
@@ -921,7 +901,7 @@ describe("POST /resend-confirmation-code", () => {
     };
 
     return request(app)
-      .post("/resend-confirmation-code")
+      .post("/api/auth/resend-confirmation-code")
       .send(input)
       .expect(200)
       .then(() => {
@@ -940,7 +920,7 @@ describe("POST /resend-confirmation-code", () => {
     });
 
     return request(app)
-      .post("/resend-confirmation-code")
+      .post("/api/auth/resend-confirmation-code")
       .send(input)
       .expect(200)
       .then(({ body }) => {
@@ -958,7 +938,7 @@ describe("POST /resend-confirmation-code", () => {
     });
 
     return request(app)
-      .post("/resend-confirmation-code")
+      .post("/api/auth/resend-confirmation-code")
       .send(input)
       .expect(400)
       .then(({ body }) => {
@@ -967,7 +947,7 @@ describe("POST /resend-confirmation-code", () => {
   });
 });
 
-describe("POST /forgot-password", () => {
+describe("POST /api/auth/forgot-password", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -976,7 +956,10 @@ describe("POST /forgot-password", () => {
       email: "test@test.com",
     };
 
-    return request(app).post("/forgot-password").expect(200).send(input);
+    return request(app)
+      .post("/api/auth/forgot-password")
+      .expect(200)
+      .send(input);
   });
   it("should call resetUserPassword with the correct argument", async () => {
     const input = {
@@ -984,7 +967,7 @@ describe("POST /forgot-password", () => {
     };
 
     return request(app)
-      .post("/forgot-password")
+      .post("/api/auth/forgot-password")
       .expect(200)
       .send(input)
       .then(() => {
@@ -1003,7 +986,7 @@ describe("POST /forgot-password", () => {
     });
 
     return request(app)
-      .post("/forgot-password")
+      .post("/api/auth/forgot-password")
       .expect(200)
       .send(input)
       .then(({ body }) => {
@@ -1021,7 +1004,7 @@ describe("POST /forgot-password", () => {
     });
 
     return request(app)
-      .post("/forgot-password")
+      .post("/api/auth/forgot-password")
       .send(input)
       .expect(400)
       .then(({ body }) => {
@@ -1030,7 +1013,7 @@ describe("POST /forgot-password", () => {
   });
 });
 
-describe("POST /confirm-forgot-password", () => {
+describe("POST /api/auth/confirm-forgot-password", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -1041,7 +1024,7 @@ describe("POST /confirm-forgot-password", () => {
       code: "code",
     };
 
-    return request(app).post("/confirm-forgot-password").expect(200);
+    return request(app).post("/api/auth/confirm-forgot-password").expect(200);
   });
   it("should call confirmResetUserPassword", async () => {
     const input = {
@@ -1051,7 +1034,7 @@ describe("POST /confirm-forgot-password", () => {
     };
 
     return request(app)
-      .post("/confirm-forgot-password")
+      .post("/api/auth/confirm-forgot-password")
       .send(input)
       .expect(200)
       .then(() => {
@@ -1076,7 +1059,7 @@ describe("POST /confirm-forgot-password", () => {
     });
 
     return request(app)
-      .post("/confirm-forgot-password")
+      .post("/api/auth/confirm-forgot-password")
       .send(input)
       .expect(200)
       .then(({ body }) => {
@@ -1096,7 +1079,7 @@ describe("POST /confirm-forgot-password", () => {
     });
 
     return request(app)
-      .post("/confirm-forgot-password")
+      .post("/api/auth/confirm-forgot-password")
       .send(input)
       .expect(400)
       .then(({ body }) => {
@@ -1105,7 +1088,7 @@ describe("POST /confirm-forgot-password", () => {
   });
 });
 
-describe("POST /sign-out", () => {
+describe("POST /api/auth/sign-out", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -1113,7 +1096,7 @@ describe("POST /sign-out", () => {
     const accessToken = "token";
 
     return request(app)
-      .post("/sign-out")
+      .post("/api/auth/sign-out")
       .set("Authorization", `Bearer ${accessToken}`)
       .expect(200);
   });
@@ -1121,7 +1104,7 @@ describe("POST /sign-out", () => {
     const accessToken = "token";
 
     return request(app)
-      .post("/sign-out")
+      .post("/api/auth/sign-out")
       .set("Authorization", `Bearer ${accessToken}`)
       .expect(200)
       .then(() => {
@@ -1138,7 +1121,7 @@ describe("POST /sign-out", () => {
     });
 
     return request(app)
-      .post("/sign-out")
+      .post("/api/auth/sign-out")
       .set("Authorization", `Bearer ${accessToken}`)
       .expect(200)
       .then(({ body }) => {
@@ -1154,7 +1137,7 @@ describe("POST /sign-out", () => {
     });
 
     return request(app)
-      .post("/sign-out")
+      .post("/api/auth/sign-out")
       .set("Authorization", `Bearer ${accessToken}`)
       .expect(400)
       .then(({ body }) => {
@@ -1178,7 +1161,7 @@ describe("POST /sign-out", () => {
 //   });
 // });
 
-describe("GET /api-keys/:username", () => {
+describe("GET /api/db/api-keys/:username", () => {
   it("should when successful respond with a 200 status code", async () => {
     const accessToken = jwt.sign(
       {
@@ -1188,7 +1171,7 @@ describe("GET /api-keys/:username", () => {
     );
 
     return request(app)
-      .get("/api-keys/john_doe")
+      .get("/api/db/api-keys/john_doe")
       .set("Authorization", `Bearer ${accessToken}`)
       .expect(200);
   });
@@ -1201,7 +1184,7 @@ describe("GET /api-keys/:username", () => {
     );
 
     return request(app)
-      .get("/api-keys/john_doe")
+      .get("/api/db/api-keys/john_doe")
       .expect(200)
       .set("Authorization", `Bearer ${accessToken}`)
       .then(({ body }) => {
@@ -1222,7 +1205,7 @@ describe("GET /api-keys/:username", () => {
     const mockErrorMessage = "Unauthorized access.";
 
     return request(app)
-      .get("/api-keys/john_doe")
+      .get("/api/db/api-keys/john_doe")
       .expect(401)
       .set("Authorization", `Bearer ${accessToken}`)
       .then(({ body }) => {
@@ -1239,7 +1222,7 @@ describe("GET /api-keys/:username", () => {
     const mockErrorMessage = "Not found.";
 
     return request(app)
-      .get("/api-keys/james_bond")
+      .get("/api/db/api-keys/james_bond")
       .expect(404)
       .set("Authorization", `Bearer ${accessToken}`)
       .then(({ body }) => {
@@ -1248,7 +1231,7 @@ describe("GET /api-keys/:username", () => {
   });
 });
 
-describe("POST /api-keys/:username", () => {
+describe("POST /api/db/api-keys/:username", () => {
   it("should when successful respond with a 201 status code, and an object of the newly added entry", async () => {
     const accessToken = jwt.sign(
       {
@@ -1264,7 +1247,7 @@ describe("POST /api-keys/:username", () => {
     };
 
     return request(app)
-      .post("/api-keys/test_user")
+      .post("/api/db/api-keys/test_user")
       .expect(201)
       .set("Authorization", `Bearer ${accessToken}`)
       .send(input)
@@ -1293,7 +1276,7 @@ describe("POST /api-keys/:username", () => {
     const mockErrorMessage = "Unauthorized access.";
 
     return request(app)
-      .post("/api-keys/test_user")
+      .post("/api/db/api-keys/test_user")
       .set("Authorization", `Bearer ${accessToken}`)
       .send(input)
       .expect(401)
@@ -1316,7 +1299,7 @@ describe("POST /api-keys/:username", () => {
     };
 
     return request(app)
-      .post("/api-keys/john_doe")
+      .post("/api/db/api-keys/john_doe")
       .expect(400)
       .set("Authorization", `Bearer ${accessToken}`)
       .send(input)
@@ -1338,7 +1321,7 @@ describe("POST /api-keys/:username", () => {
     };
 
     return request(app)
-      .post("/api-keys/test_user")
+      .post("/api/db/api-keys/test_user")
       .expect(400)
       .set("Authorization", `Bearer ${accessToken}`)
       .send(input)
@@ -1348,7 +1331,7 @@ describe("POST /api-keys/:username", () => {
   });
 });
 
-describe("PATCH /api-keys/:username", () => {
+describe("PATCH /api/db/api-keys/:username", () => {
   it("should when successful respond with a 200 status code, and an object containing the updated entry", async () => {
     const accessToken = jwt.sign(
       {
@@ -1368,7 +1351,7 @@ describe("PATCH /api-keys/:username", () => {
       private_key: "new_private_key_john_doe",
     };
     return request(app)
-      .patch("/api-keys/john_doe")
+      .patch("/api/db/api-keys/john_doe")
       .expect(200)
       .set("Authorization", `Bearer ${accessToken}`)
       .send(input)
@@ -1390,7 +1373,7 @@ describe("PATCH /api-keys/:username", () => {
     const mockErrorMessage = "Unauthorized access.";
 
     return request(app)
-      .patch("/api-keys/john_doe")
+      .patch("/api/db/api-keys/john_doe")
       .set("Authorization", `Bearer ${accessToken}`)
       .send(input)
       .expect(401)
@@ -1410,7 +1393,7 @@ describe("PATCH /api-keys/:username", () => {
     };
 
     return request(app)
-      .patch("/api-keys/john_doe")
+      .patch("/api/db/api-keys/john_doe")
       .expect(400)
       .set("Authorization", `Bearer ${accessToken}`)
       .send(input)
@@ -1420,7 +1403,7 @@ describe("PATCH /api-keys/:username", () => {
   });
 });
 
-describe("DELETE /api-keys/:username", () => {
+describe("DELETE /api/db/api-keys/:username", () => {
   it("should when successful respond with a 204 status code, and have deleted the selected database entry", async () => {
     const accessToken = jwt.sign(
       {
@@ -1430,7 +1413,7 @@ describe("DELETE /api-keys/:username", () => {
     );
 
     return request(app)
-      .delete("/api-keys/john_doe")
+      .delete("/api/db/api-keys/john_doe")
       .expect(204)
       .set("Authorization", `Bearer ${accessToken}`)
       .then(async () => {
@@ -1451,7 +1434,7 @@ describe("DELETE /api-keys/:username", () => {
     const mockErrorMessage = "Unauthorized access.";
 
     return request(app)
-      .delete("/api-keys/john_doe")
+      .delete("/api/db/api-keys/john_doe")
       .set("Authorization", `Bearer ${accessToken}`)
       .expect(401)
       .then(({ body }) => {
@@ -1468,7 +1451,7 @@ describe("DELETE /api-keys/:username", () => {
     const mockErrorMessage = "Not found.";
 
     return request(app)
-      .delete("/api-keys/james_bond")
+      .delete("/api/db/api-keys/james_bond")
       .set("Authorization", `Bearer ${accessToken}`)
       .expect(404)
       .then(({ body }) => {
@@ -1477,7 +1460,7 @@ describe("DELETE /api-keys/:username", () => {
   });
 });
 
-describe("GET /user-settings/:username", () => {
+describe("GET /api/db/user-settings/:username", () => {
   it("should when successful respond with a 200 status code", async () => {
     const accessToken = jwt.sign(
       {
@@ -1487,7 +1470,7 @@ describe("GET /user-settings/:username", () => {
     );
 
     return request(app)
-      .get("/user-settings/john_doe")
+      .get("/api/db/user-settings/john_doe")
       .set("Authorization", `Bearer ${accessToken}`)
       .expect(200);
   });
@@ -1500,7 +1483,7 @@ describe("GET /user-settings/:username", () => {
     );
 
     return request(app)
-      .get("/user-settings/john_doe")
+      .get("/api/db/user-settings/john_doe")
       .expect(200)
       .set("Authorization", `Bearer ${accessToken}`)
       .then(({ body }) => {
@@ -1522,7 +1505,7 @@ describe("GET /user-settings/:username", () => {
     const mockErrorMessage = "Unauthorized access.";
 
     return request(app)
-      .get("/user-settings/john_doe")
+      .get("/api/db/user-settings/john_doe")
       .expect(401)
       .set("Authorization", `Bearer ${accessToken}`)
       .then(({ body }) => {
@@ -1539,7 +1522,7 @@ describe("GET /user-settings/:username", () => {
     const mockErrorMessage = "Not found.";
 
     return request(app)
-      .get("/user-settings/james_bond")
+      .get("/api/db/user-settings/james_bond")
       .expect(404)
       .set("Authorization", `Bearer ${accessToken}`)
       .then(({ body }) => {
@@ -1548,7 +1531,7 @@ describe("GET /user-settings/:username", () => {
   });
 });
 
-describe("POST /user-settings/:username", () => {
+describe("POST /api/db/user-settings/:username", () => {
   it("should when successful respond with a 201 status code, and an object of the newly added entry", async () => {
     const accessToken = jwt.sign(
       {
@@ -1574,7 +1557,7 @@ describe("POST /user-settings/:username", () => {
     };
 
     return request(app)
-      .post("/user-settings/test_user")
+      .post("/api/db/user-settings/test_user")
       .expect(201)
       .set("Authorization", `Bearer ${accessToken}`)
       .send(input)
@@ -1614,7 +1597,7 @@ describe("POST /user-settings/:username", () => {
     const mockErrorMessage = "Unauthorized access.";
 
     return request(app)
-      .post("/user-settings/test_user")
+      .post("/api/db/user-settings/test_user")
       .expect(401)
       .set("Authorization", `Bearer ${accessToken}`)
       .send(input)
@@ -1636,7 +1619,7 @@ describe("POST /user-settings/:username", () => {
     };
 
     return request(app)
-      .post("/user-settings/john_doe")
+      .post("/api/db/user-settings/john_doe")
       .set("Authorization", `Bearer ${accessToken}`)
       .expect(400)
       .send(input)
@@ -1667,7 +1650,7 @@ describe("POST /user-settings/:username", () => {
     };
 
     return request(app)
-      .post("/user-settings/test_user")
+      .post("/api/db/user-settings/test_user")
       .expect(400)
       .set("Authorization", `Bearer ${accessToken}`)
       .send(input)
@@ -1677,7 +1660,7 @@ describe("POST /user-settings/:username", () => {
   });
 });
 
-describe("PATCH /user-settings/:username", () => {
+describe("PATCH /api/db/user-settings/:username", () => {
   it("should when successful respond with a 200 status code, and an object containing the updated entry", async () => {
     const accessToken = jwt.sign(
       {
@@ -1693,7 +1676,7 @@ describe("PATCH /user-settings/:username", () => {
     };
 
     return request(app)
-      .patch("/user-settings/john_doe")
+      .patch("/api/db/user-settings/john_doe")
       .expect(200)
       .set("Authorization", `Bearer ${accessToken}`)
       .send(input)
@@ -1721,7 +1704,7 @@ describe("PATCH /user-settings/:username", () => {
     };
 
     return request(app)
-      .patch("/user-settings/john_doe")
+      .patch("/api/db/user-settings/john_doe")
       .expect(401)
       .set("Authorization", `Bearer ${accessToken}`)
       .send(input)
@@ -1744,7 +1727,7 @@ describe("PATCH /user-settings/:username", () => {
     };
 
     return request(app)
-      .patch("/user-settings/john_doe")
+      .patch("/api/db/user-settings/john_doe")
       .expect(400)
       .set("Authorization", `Bearer ${accessToken}`)
       .send(input)
@@ -1754,7 +1737,7 @@ describe("PATCH /user-settings/:username", () => {
   });
 });
 
-describe("DELETE /user-settings/:username", () => {
+describe("DELETE /api/db/user-settings/:username", () => {
   it("should when successful respond with 204 No Content, and remove the database entry", async () => {
     const accessToken = jwt.sign(
       {
@@ -1764,7 +1747,7 @@ describe("DELETE /user-settings/:username", () => {
     );
 
     return request(app)
-      .delete("/user-settings/john_doe")
+      .delete("/api/db/user-settings/john_doe")
       .expect(204)
       .set("Authorization", `Bearer ${accessToken}`)
       .then(async ({ body }) => {
@@ -1784,7 +1767,7 @@ describe("DELETE /user-settings/:username", () => {
     );
 
     return request(app)
-      .delete("/user-settings/james_bond")
+      .delete("/api/db/user-settings/james_bond")
       .expect(404)
       .set("Authorization", `Bearer ${accessToken}`)
       .then(({ body }) => {
@@ -1800,7 +1783,7 @@ describe("DELETE /user-settings/:username", () => {
     );
 
     return request(app)
-      .delete("/user-settings/john_doe")
+      .delete("/api/db/user-settings/john_doe")
       .expect(401)
       .set("Authorization", `Bearer ${accessToken}`)
       .then(({ body }) => {

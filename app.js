@@ -49,51 +49,51 @@ app.use(express.json());
 app.use(testRoute);
 
 // Kraken
-app.get("/get-balance", verifyAccessToken, getBalance);
+app.get("/api/kraken/balance", verifyAccessToken, getBalance);
 app.get("/api/kraken/ledger-info", verifyAccessToken, getLedgerInfo);
-app.get("/get-open-orders", verifyAccessToken, getOpenOrders);
-app.get("/get-pnl", verifyAccessToken, getPnl);
-app.get("/get-trades-history", verifyAccessToken, getTradesHistory);
-app.post("/create-order", placeOrder);
-app.patch("/edit-order", verifyAccessToken, editOrder);
-app.patch("/cancel-order", verifyAccessToken, cancelOrderById);
-app.patch("/cancel-all-orders", verifyAccessToken, cancelAllOrders);
+app.get("/api/kraken/open-orders", verifyAccessToken, getOpenOrders);
+app.get("/api/kraken/pnl", verifyAccessToken, getPnl);
+app.get("/api/kraken/trades-history", verifyAccessToken, getTradesHistory);
+app.post("/api/kraken/create-order", placeOrder);
+app.patch("/api/kraken/edit-order", verifyAccessToken, editOrder);
+app.patch("/api/kraken/cancel-order", verifyAccessToken, cancelOrderById);
+app.patch("/api/kraken/cancel-all-orders", verifyAccessToken, cancelAllOrders);
 
 // Auth
-app.post("/register", userSignUp);
-app.post("/confirm-sign-up", confirmUser);
-app.post("/resend-confirmation-code", resendAccountConfirmation);
-app.post("/sign-in", userSignIn);
-app.post("/sign-out", verifyAccessToken, userSignOut);
-app.post("/forgot-password", userForgotPassword);
-app.post("/confirm-forgot-password", userConfirmForgotPassword);
-app.patch("/change-password", verifyAccessToken, changeUserPasswordByToken);
-app.delete("/delete-user", verifyAccessToken, deleteUserByToken);
+app.post("/api/auth/register", userSignUp);
+app.post("/api/auth/confirm-sign-up", confirmUser);
+app.post("/api/auth/resend-confirmation-code", resendAccountConfirmation);
+app.post("/api/auth/sign-in", userSignIn);
+app.post("/api/auth/sign-out", verifyAccessToken, userSignOut);
+app.post("/api/auth/forgot-password", userForgotPassword);
+app.post("/api/auth/confirm-forgot-password", userConfirmForgotPassword);
+app.patch("/api/auth/change-password", verifyAccessToken, changeUserPasswordByToken);
+app.delete("/api/auth/delete-user", verifyAccessToken, deleteUserByToken);
 app.post("/api/auth/verify-access", verifyAccessToken, userAccessVerification);
 
 // Database
-app.get("/api-keys/:username", verifyAccessToken, getUserApiKeys);
-app.post("/api-keys/:username", verifyAccessToken, postUserApiKeys);
-app.patch("/api-keys/:username", verifyAccessToken, patchUserApiKeys);
-app.delete("/api-keys/:username", verifyAccessToken, deleteUserApiKeys);
+app.get("/api/db/api-keys/:username", verifyAccessToken, getUserApiKeys);
+app.post("/api/db/api-keys/:username", verifyAccessToken, postUserApiKeys);
+app.patch("/api/db/api-keys/:username", verifyAccessToken, patchUserApiKeys);
+app.delete("/api/db/api-keys/:username", verifyAccessToken, deleteUserApiKeys);
 
 app.get(
-  "/user-settings/:username",
+  "/api/db/user-settings/:username",
   verifyAccessToken,
   getUserSettingsByUsername
 );
 app.post(
-  "/user-settings/:username",
+  "/api/db/user-settings/:username",
   verifyAccessToken,
   postUserSettingsByUsername
 );
 app.patch(
-  "/user-settings/:username",
+  "/api/db/user-settings/:username",
   verifyAccessToken,
   patchUserSettingsByUsername
 );
 app.delete(
-  "/user-settings/:username",
+  "/api/db/user-settings/:username",
   verifyAccessToken,
   deleteUserSettingsByUsername
 );
